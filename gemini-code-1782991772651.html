@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moville Mortgage & Finance Ltd</title>
+    <!-- Google Fonts & FontAwesome for Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0b2545;
+            --secondary-color: #134074;
+            --accent-color: #8da9c4;
+            --light-bg: #f4f5f7;
+            --text-dark: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- TOP CAROUSEL / HERO SECTION --- */
+        .hero-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            min-height: 500px;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, visibility 1s;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Slide Backgrounds using Absolute Paths */
+        .slide-1 {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://www.movillefinance.com/images/slider1.jpg');
+        }
+        .slide-2 {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://www.movillefinance.com/images/slider2.jpg');
+        }
+        .slide-3 {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://www.movillefinance.com/images/slider3.jpg');
+        }
+
+        /* Floating Info Panel Overlay inside Carousel */
+        .hero-panel-overlay {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            max-width: 550px;
+            background: rgba(11, 37, 69, 0.9);
+            padding: 40px;
+            border-left: 5px solid var(--accent-color);
+            color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        .hero-panel-overlay h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-panel-overlay p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-weight: 300;
+            color: #e0e0e0;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .hero-btn:hover {
+            background-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Carousel Navigation Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 15;
+            transition: background 0.3s;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .arrow-prev { left: 20px; }
+        .arrow-next { right: 20px; }
+
+        /* --- TESTIMONIALS SECTION --- */
+        .testimonials-section {
+            background-color: var(--light-bg);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .testimonials-container {
+            position: relative;
+            max-width: 800px;
+            margin: 50px auto 0 auto;
+            min-height: 250px;
+        }
+
+        .testimonial-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s;
+        }
+
+        .testimonial-slide.active {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .testimonial-box {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .testimonial-box i.quote-icon {
+            font-size: 2.5rem;
+            color: rgba(141, 169, 196, 0.3);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background-color: var(--primary-color);
+        }
+
+        /* Responsive Modifications */
+        @media (max-width: 768px) {
+            .hero-panel-overlay {
+                left: 5%;
+                right: 5%;
+                width: auto;
+                padding: 25px;
+                top: 55%;
+            }
+            .hero-panel-overlay h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO CAROUSEL -->
+    <section class="hero-carousel-container">
+        <!-- Slide 1 -->
+        <div class="hero-slide active slide-1">
+            <div class="hero-panel-overlay">
+                <h1>Expert Mortgage Solutions</h1>
+                <p>Navigating you through competitive rates and tailored financial options to secure your dream home seamlessly.</p>
+                <a href="https://www.movillefinance.com/contact" class="hero-btn">Get Started</a>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="hero-slide slide-2">
+            <div class="hero-panel-overlay">
+                <h1>Commercial & Business Loans</h1>
+                <p>Empowering your business growth with flexible capital matching your strategic long-term development targets.</p>
+                <a href="https://www.movillefinance.com/services" class="hero-btn">Explore Services</a>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="hero-slide slide-3">
+            <div class="hero-panel-overlay">
+                <h1>Your Trusted Financial Partner</h1>
+                <p>Providing clear transparency, dedicated consultation, and professional advice at every single step.</p>
+                <a href="https://www.movillefinance.com/about" class="hero-btn">Learn More</a>
+            </div>
+        </div>
+
+        <!-- Arrows -->
+        <button class="carousel-arrow arrow-prev" onclick="moveHeroSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-arrow arrow-next" onclick="moveHeroSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </section>
+
+    <!-- TESTIMONIALS CAROUSEL SECTION -->
+    <section class="testimonials-section">
+        <h2 class="section-title">What Our Clients Say</h2>
+        
+        <div class="testimonials-container">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-slide active">
+                <div class="testimonial-box">
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p class="testimonial-text">"The team at Moville Finance made securing our first home loan completely stress-free. They broke down all the numbers clearly and found us an incredible rate."</p>
+                    <p class="testimonial-author">- Sarah &amp; David M.</p>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-slide">
+                <div class="testimonial-box">
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p class="testimonial-text">"Incredible professionalism. Our business expansion loan was approved rapidly, giving us the agility we needed to move fast on an open commercial property."</p>
+                    <p class="testimonial-author">- James L., Managing Director</p>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-slide">
+                <div class="testimonial-box">
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p class="testimonial-text">"Honest, transparent, and communicative throughout the entire refinancing process. I highly recommend their mortgage brokerage services to anyone."</p>
+                    <p class="testimonial-author">- Elena R.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Dots for Testimonials -->
+        <div class="testimonial-dots">
+            <span class="dot active" onclick="setTestimonialSlide(0)"></span>
+            <span class="dot" onclick="setTestimonialSlide(1)"></span>
+            <span class="dot" onclick="setTestimonialSlide(2)"></span>
+        </div>
+    </section>
+
+    <!-- Lightweight Functional Scripts for Independent Rotation -->
+    <script>
+        // --- Hero Carousel Controller ---
+        let currentHeroIndex = 0;
+        const heroSlides = document.querySelectorAll('.hero-slide');
+
+        function showHeroSlide(index) {
+            heroSlides[currentHeroIndex].classList.remove('active');
+            currentHeroIndex = (index + heroSlides.length) % heroSlides.length;
+            heroSlides[currentHeroIndex].classList.add('active');
+        }
+
+        function moveHeroSlide(direction) {
+            showHeroSlide(currentHeroIndex + direction);
+        }
+
+        // Auto play Main Hero Carousel every 6 seconds
+        setInterval(() => {
+            moveHeroSlide(1);
+        }, 6000);
+
+
+        // --- Testimonials Carousel Controller ---
+        let currentTestimonialIndex = 0;
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function setTestimonialSlide(index) {
+            testimonialSlides[currentTestimonialIndex].classList.remove('active');
+            dots[currentTestimonialIndex].classList.remove('active');
+            
+            currentTestimonialIndex = index;
+            
+            testimonialSlides[currentTestimonialIndex].classList.add('active');
+            dots[currentTestimonialIndex].classList.add('active');
+        }
+
+        // Auto play Testimonials every 5 seconds
+        setInterval(() => {
+            let nextIndex = (currentTestimonialIndex + 1) % testimonialSlides.length;
+            setTestimonialSlide(nextIndex);
+        }, 5000);
+    </script>
+</body>
+</html>
